@@ -1,9 +1,10 @@
-import Navbar from '@/components/navbar';
-import { Toaster } from '@/components/ui/toaster';
-import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 
 import { Poppins } from 'next/font/google';
+
+import Navbar from '@/components/navbar';
+import { Toaster } from '@/components/ui/toaster';
+import { cn } from '@/lib/utils';
 
 export const metadata = {
   title: 'Ideas',
@@ -16,12 +17,22 @@ const font = Poppins({
   variable: '--font-sans',
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+  authModal,
+}: {
+  children: React.ReactNode;
+  authModal: React.ReactNode;
+}) {
   return (
     <html lang='en' className='dark'>
       <body className={cn('min-h-screen bg-background antialiased pt-12', font.className)}>
+        {/* @ts-expect-error server component */}
         <Navbar />
-        <div className='container max-w-7xl mx-auto h-full pt-12'>{children}</div>
+
+        {authModal}
+
+        <div className='container mx-auto h-full max-w-7xl pt-12'>{children}</div>
         <Toaster />
       </body>
     </html>

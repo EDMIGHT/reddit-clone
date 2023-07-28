@@ -1,23 +1,26 @@
 import Link from 'next/link';
-import { Icons } from './icons';
+
 import { buttonVariants } from '@/components/ui/button';
 import { getAuthSession } from '@/configs/auth.config';
+
+import { Icons } from './icons';
+import UserMenu from './user-menu';
 
 const Navbar = async () => {
   const session = await getAuthSession();
 
   return (
-    <div className='fixed top-0 inset-x-0 h-fit bg-secondary border-b-2 z-10 py-2'>
-      <div className='container max-w-7xl h-full mx-auto flex items-center justify-between gap-2'>
-        <Link href='/' className='flex gap-2 items-center'>
+    <div className='fixed inset-x-0 top-0 z-10 h-fit border-b-2 bg-background py-2'>
+      <div className='container mx-auto flex h-full max-w-7xl items-center justify-between gap-2'>
+        <Link href='/' className='flex items-center gap-2'>
           <Icons.logo className='h-8 w-8 sm:h-6 sm:w-6' />
-          <span className='hidden text-secondary-foreground text-sm font-medium md:block'>
+          <span className='hidden text-sm font-medium text-secondary-foreground md:block'>
             ideas
           </span>
         </Link>
 
-        {session ? (
-          <div>a</div>
+        {session?.user ? (
+          <UserMenu user={session.user} />
         ) : (
           <Link href='/sign-in' className={buttonVariants()}>
             Sign in
