@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import { Poppins } from 'next/font/google';
 
 import Navbar from '@/components/navbar';
+import Providers from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 
@@ -27,13 +28,15 @@ export default function RootLayout({
   return (
     <html lang='en' className='dark'>
       <body className={cn('min-h-screen bg-background antialiased pt-12', font.className)}>
-        {/* @ts-expect-error server component */}
-        <Navbar />
+        <Providers>
+          {/* @ts-expect-error server component */}
+          <Navbar />
 
-        {authModal}
+          {authModal}
 
-        <div className='container mx-auto h-full max-w-7xl pt-12'>{children}</div>
-        <Toaster />
+          <div className='container mx-auto h-full max-w-7xl pt-12'>{children}</div>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
