@@ -1,7 +1,9 @@
 import { format } from 'date-fns';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import SubscribeLeaveToggle from '@/components/subscribe-leave-toggle';
+import { buttonVariants } from '@/components/ui/button';
 import { getAuthSession } from '@/configs/auth.config';
 import { db } from '@/lib/db';
 
@@ -96,6 +98,16 @@ const Layout = async ({
                   subredditName={subreddit.name}
                 />
               ) : null}
+
+              <Link
+                href={`r/${slug}/submit`}
+                className={buttonVariants({
+                  variant: 'outline',
+                  className: 'w-full mb-6',
+                })}
+              >
+                create post
+              </Link>
             </dl>
           </div>
         </div>
