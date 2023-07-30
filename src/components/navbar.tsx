@@ -4,6 +4,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { getAuthSession } from '@/configs/auth.config';
 
 import { Icons } from './icons';
+import { SearchBar } from './search-bar';
 import UserMenu from './user-menu';
 
 const Navbar = async () => {
@@ -18,6 +19,8 @@ const Navbar = async () => {
             ideas
           </span>
         </Link>
+
+        <SearchBar />
 
         {session?.user ? (
           <UserMenu user={session.user} />
