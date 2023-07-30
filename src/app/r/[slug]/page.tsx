@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import MiniCreatePost from '@/components/mini-create-post';
+import { PostFeed } from '@/components/post-feed';
 import { getAuthSession } from '@/configs/auth.config';
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from '@/configs/config';
 import { db } from '@/lib/db';
@@ -41,6 +42,7 @@ const Page = async ({ params: { slug } }: PageProps) => {
     <>
       <h1 className='h-14 text-3xl font-bold md:text-4xl'>r/{subreddit.name}</h1>
       <MiniCreatePost session={session} />
+      <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} />
     </>
   );
 };

@@ -66,7 +66,7 @@ const UserMenu: FC<UserMenuProps> = ({ user }) => {
           }}
           className='cursor-pointer'
         >
-          sign Out
+          sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
