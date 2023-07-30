@@ -1,11 +1,13 @@
 'use client';
 
-import { FC, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { signIn } from 'next-auth/react';
-import { Icons } from './icons';
+import { FC, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+
+import { Icons } from './icons';
 
 interface SignInForm extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -37,7 +39,7 @@ const SignInForm: FC<SignInForm> = ({ className, ...props }) => {
         size='sm'
         className='w-full text-sm font-medium'
       >
-        {isLoading ? null : <Icons.google className='h-4 w-4 mr-2' />}
+        {isLoading ? null : <Icons.google className='mr-2 h-4 w-4' />}
         Google
       </Button>
     </div>

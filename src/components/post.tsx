@@ -50,7 +50,7 @@ export const Post: FC<PostProps> = ({
                 <span className='px-1'>•</span>
               </>
             ) : null}
-            <span>posted by u/{post.author.name}</span>{' '}
+            <span>posted by u/{post.author.username}</span>{' '}
             {formatTimeToNow(new Date(post.createAt))}
           </div>
           <a href={`/r/${subredditName}/post/${post.id}`}>

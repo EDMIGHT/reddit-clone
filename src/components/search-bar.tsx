@@ -5,8 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import debounce from 'lodash.debounce';
 import { Users } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { FC, useCallback, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   Command,
@@ -16,11 +16,15 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
+import { useOnClickOutside } from '@/hooks/use-on-click-outside';
 
 type SearchBarProps = {};
 
 export const SearchBar: FC<SearchBarProps> = ({}) => {
   const [input, setInput] = useState('');
+  const commandRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const {
     data: queryRes,
@@ -47,10 +51,19 @@ export const SearchBar: FC<SearchBarProps> = ({}) => {
     request();
   }, []);
 
-  const router = useRouter();
+  useOnClickOutside(commandRef, () => {
+    setInput('');
+  });
+
+  useEffect(() => {
+    setInput('');
+  }, [pathname]);
 
   return (
-    <Command className='relative z-50 max-w-lg overflow-visible rounded-lg border'>
+    <Command
+      ref={commandRef}
+      className='relative z-50 max-w-lg overflow-visible rounded-lg border'
+    >
       <CommandInput
         value={input}
         onValueChange={(text) => {
