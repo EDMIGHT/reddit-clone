@@ -4,7 +4,7 @@ import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { FC, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from '@/configs/config';
 import { ExtendedPost } from '@/types/db';
@@ -47,6 +47,12 @@ export const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => 
       },
     }
   );
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      fetchNextPage();
+    }
+  }, [entry, fetchNextPage]);
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 

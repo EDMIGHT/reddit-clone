@@ -28,6 +28,9 @@ const Page = async ({ params: { slug } }: PageProps) => {
           comments: true,
           subreddit: true,
         },
+        orderBy: {
+          createAt: 'desc',
+        },
 
         take: INFINITE_SCROLLING_PAGINATION_RESULTS,
       },
