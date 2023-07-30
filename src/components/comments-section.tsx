@@ -40,7 +40,7 @@ export const CommentsSection = async ({ postId }: CommentsSectionProps) => {
           .map((topLevelCom) => {
             const topLevelComVotesAmt = topLevelCom.votes.reduce((acc, vote) => {
               if (vote.type === 'UP') return acc + 1;
-              else if (vote.type === 'DOWN') return acc + 1;
+              else if (vote.type === 'DOWN') return acc - 1;
               return acc;
             }, 0);
 
@@ -51,8 +51,36 @@ export const CommentsSection = async ({ postId }: CommentsSectionProps) => {
             return (
               <div key={topLevelCom.id} className='flex flex-col'>
                 <div className='mb-2'>
-                  <PostComment comment={topLevelCom} />
+                  <PostComment
+                    postId={postId}
+                    currentVote={topLevelComVote}
+                    votesAmt={topLevelComVotesAmt}
+                    comment={topLevelCom}
+                  />
                 </div>
+                {topLevelCom.replies
+                  .sort((a, b) => b.votes.length - a.votes.length)
+                  .map((reply) => {
+                    const replyVotesAmt = reply.votes.reduce((acc, vote) => {
+                      if (vote.type === 'UP') return acc + 1;
+                      else if (vote.type === 'DOWN') return acc - 1;
+                      return acc;
+                    }, 0);
+
+                    const replyVote = reply.votes.find(
+                      (vote) => vote.userId === session?.user.id
+                    );
+                    return (
+                      <div key={reply.id} className='ml-2 border-l-2 border-border py-2 pl-4'>
+                        <PostComment
+                          comment={reply}
+                          currentVote={replyVote}
+                          votesAmt={replyVotesAmt}
+                          postId={postId}
+                        />
+                      </div>
+                    );
+                  })}
               </div>
             );
           })}
