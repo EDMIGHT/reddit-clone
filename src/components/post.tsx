@@ -5,6 +5,9 @@ import { FC, useRef } from 'react';
 import { formatTimeToNow } from '@/lib/utils';
 
 import { EditorOutput } from './editor-output';
+import { PostVoteClient } from './post-vote/post-vote-client';
+
+type PartialVote = Pick<Vote, 'type'>;
 
 type PostProps = {
   subredditName: string;
@@ -13,14 +16,27 @@ type PostProps = {
     votes: Vote[];
   };
   commentAmt: number;
+  votesAmt: number;
+  currentVote?: PartialVote;
 };
 
-export const Post: FC<PostProps> = ({ subredditName, post, commentAmt }) => {
+export const Post: FC<PostProps> = ({
+  subredditName,
+  post,
+  commentAmt,
+  votesAmt,
+  currentVote,
+}) => {
   const pRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className='rounded-md bg-card shadow'>
       <div className='flex justify-between px-6 py-4'>
+        <PostVoteClient
+          postId={post.id}
+          initialVote={currentVote?.type}
+          initialVotesAmt={votesAmt}
+        />
         <div className='w-0 flex-1'>
           <div className='mt-1 max-h-40 text-xs text-card-foreground'>
             {subredditName ? (
@@ -36,13 +52,11 @@ export const Post: FC<PostProps> = ({ subredditName, post, commentAmt }) => {
             ) : null}
             <span>posted by u/{post.author.name}</span> {formatTimeToNow(post.createAt)}
           </div>
-
           <a href={`/r/${subredditName}/post/${post.id}`}>
             <h1 className='py-2 text-lg font-semibold leading-6 text-secondary-foreground'>
               {post.title}
             </h1>
           </a>
-
           <div className='relative max-h-40 w-full overflow-hidden text-sm' ref={pRef}>
             <EditorOutput content={post.content} />
 
