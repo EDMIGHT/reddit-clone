@@ -1,7 +1,9 @@
 import { Post, User, Vote } from '@prisma/client';
+import { Loader2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
+import { CommentsSection } from '@/components/comments-section';
 import { EditorOutput } from '@/components/editor-output';
 import { PostVoteServer } from '@/components/post-vote/post-vote-server';
 import { PostVoteShell } from '@/components/post-vote/post-vote-shell';
@@ -69,6 +71,11 @@ const Page = async ({ params: { postId } }: PageProps) => {
           </h1>
 
           <EditorOutput content={post?.content ?? cachedPost.content} />
+
+          <Suspense fallback={<Loader2 className='h-5 w-5 animate-spin' />}>
+            {/* @ts-expect-error server component */}
+            <CommentsSection postId={post?.id ?? cachedPost.id} />
+          </Suspense>
         </div>
       </div>
     </div>

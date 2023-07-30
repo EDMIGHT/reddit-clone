@@ -94,21 +94,20 @@ model Post {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  text      String
-  createAt  DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-  Post      Post     @relation(fields: [postId], references: [id])
-  postId    String
+  id       String   @id @default(cuid())
+  text     String
+  createAt DateTime @default(now())
+  author   User     @relation(fields: [authorId], references: [id])
+  authorId String
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId   String
 
-  replyTo   Comment?  @relation("reply to", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  replies   Comment[] @relation("reply to")
   replyToId String?
+  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[] @relation("ReplyTo")
 
   votes     CommentVote[]
-  commentId String
+  commentId String?
 }
 
 enum VoteType {

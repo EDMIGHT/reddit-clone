@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       });
     }
 
-    return new Response('could not post to subreddit at this thime', {
+    return new Response('could not post to subreddit at this time', {
       status: 500,
     });
   }
