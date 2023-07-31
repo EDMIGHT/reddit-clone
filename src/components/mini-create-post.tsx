@@ -5,9 +5,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
 import { FC } from 'react';
 
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import UserAvatar from './user-avatar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import UserAvatar from '@/components/user-avatar';
 
 interface MiniCreatePostProps {
   session: Session | null;

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import SubscribeLeaveToggle from '@/components/subscribe-leave-toggle';
+import ToFeedButton from '@/components/to-feed-button';
 import { buttonVariants } from '@/components/ui/button';
 import { getAuthSession } from '@/configs/auth.config';
 import { db } from '@/lib/db';
@@ -60,9 +61,9 @@ const Layout = async ({
   return (
     <div className='mx-auto h-full max-w-7xl pt-12 sm:container'>
       <div>
+        <ToFeedButton />
         <div className='grid grid-cols-1 gap-y-4 py-6 md:grid-cols-3 md:gap-x-4'>
           <div className='col-span-2 flex flex-col space-y-6'>{children}</div>
-
           <div className='order-first hidden h-fit overflow-hidden rounded-lg border border-border md:order-last md:block'>
             <div className='px-6 py-4'>
               <p className='py-3 font-semibold'>about r/{subreddit.name}</p>
